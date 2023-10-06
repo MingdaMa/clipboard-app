@@ -7,7 +7,7 @@ const axiosInstance = axios.create({
 })
 
 const addNewTag = async (newTag) => {
-    const res = await axiosInstance.post('', newTag)
+    const res = await axiosInstance.post('', { name: newTag })
     return res
 }
 
