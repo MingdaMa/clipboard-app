@@ -1,0 +1,99 @@
+package com.example.clipboard.domain;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+
+import java.util.HashSet;
+import java.util.Set;
+
+@Entity
+@Table(name = "posts")
+public class Post extends Model {
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @Column(name = "post_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long postId;
+
+    @Column(name = "title")
+    private String title;
+
+    @Column(name = "summary")
+    private String summary;
+
+    @Column(name = "link")
+    private String link;
+
+    @Column(name = "thumbnail")
+    private String thumbnail;
+
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "posts", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @JsonIgnore
+    private Set<Tag> tags = new HashSet<>();
+
+    public Post(){
+        super();
+    }
+
+    public void addTag(Tag tag) {
+        this.tags.add(tag);
+        tag.getPosts().add(this);
+    }
+
+    public void removeTag(Long tagId) {
+        Tag tag = this.tags.stream().filter(t -> t.getTagId() == tagId).findFirst().orElse(null);
+        if (tag != null) {
+            this.tags.remove(tag);
+            tag.getPosts().remove(this);
+        }
+    }
+
+    public Long getPostId() {
+        return postId;
+    }
+
+    public void setPostId(Long postId) {
+        this.postId = postId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+
+    public Set<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
+    }
+}
