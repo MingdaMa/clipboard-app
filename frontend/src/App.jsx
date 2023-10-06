@@ -1,33 +1,34 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useState, useEffect } from 'react'
 import './App.css'
+import { tagService, postService } from './api/index'
+import Tags from './components/Tags'
+import Posts from './components/Posts'
 
-function App() {
-  const [count, setCount] = useState(0)
+
+const App = () => {
+  const [tags, setTags] = useState([])
+  const [posts, setPosts] = useState([])
+
+  const getAllTags = async () => {
+    const tagList = await tagService.getAllTags()
+    setTags(tagList)
+  }
+
+  const getAllPosts = async () => {
+    const postList = await postService.getAllPosts()
+    console.log(postList)
+    setPosts(postList)
+  }
+
+  useEffect(() => {
+    getAllTags()
+    getAllPosts()
+  }, [])
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Tags tags={tags} />
+      <Posts posts={posts} />
     </>
   )
 }
