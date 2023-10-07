@@ -1,12 +1,14 @@
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
-import { Button, CardActionArea, CardActions } from '@mui/material';
+import { Button, CardActionArea, CardActions, IconButton, Box, Typography } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { postService } from '../api/index'
 
-const Post = ({ post }) => {
+const Post = ({ post, deletePost }) => {
+
     return (
-        <Card sx={{ maxWidth: 345 }}>
+        <Card sx={{ maxWidth: 230, maxHeight: 200 }}>
             <CardActionArea>
             {/* <CardMedia
                 component="img"
@@ -15,18 +17,21 @@ const Post = ({ post }) => {
                 alt="green iguana"
             /> */}
             <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
+                <Typography gutterBottom variant="body1" component="div">
                     {post.title}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
+                {/* <Typography variant="body2" color="text.secondary">
                     {post.summary}
-                </Typography>
+                </Typography> */}
             </CardContent>
             </CardActionArea>
             <CardActions>
-            <Button size="small" color="primary">
-                Open
-            </Button>
+                <Button href={post.link} target="_blank" size="small" color="secondary">
+                    Open
+                </Button>
+                <IconButton onClick={() => deletePost(post.postId)}>
+                    <DeleteIcon/>
+                </IconButton>
             </CardActions>
         </Card>
     )

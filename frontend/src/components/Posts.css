@@ -1,0 +1,11 @@
+.posts {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-left: 15px;
+}
+
+.post {
+    margin: 10px;
+}
