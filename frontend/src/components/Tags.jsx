@@ -5,12 +5,8 @@ import AddIcon from '@mui/icons-material/Add';
 import AddTagModal from './AddTagModal'
 import { tagService } from '../api/index'
 
-const Tags = ({ tags, setIsDeleteTag, setIsTagAdded }) => { 
+const Tags = ({ tags, setPosts, setIsDeleteTag, setIsTagAdded }) => { 
     const [open, setOpen] = useState(false)
-
-    const handleClickOnChip = (tagId) => {
-        console.log(`${tagId} is clicked`)
-    }
     
     const handleDeleteChip = async (tagId) => {
         try {
@@ -21,6 +17,11 @@ const Tags = ({ tags, setIsDeleteTag, setIsTagAdded }) => {
         } catch(e) {
             console.log(e)
         }
+    }
+
+    const filterPostsByTag = (tagId) => {
+        const filteredRes = tags.filter(tag => tag.tagId === tagId)
+        setPosts(filteredRes[0].posts)
     }
 
     const handleOpen = () => setOpen(true)
@@ -41,7 +42,7 @@ const Tags = ({ tags, setIsDeleteTag, setIsTagAdded }) => {
                         return <Chip 
                             key={tagId} 
                             label={name} 
-                            onClick={() => handleClickOnChip(tagId)} 
+                            onClick={() => filterPostsByTag(tagId)} 
                             onDelete={() => handleDeleteChip(tagId)}
                         ></Chip>
                     })

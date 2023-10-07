@@ -51,7 +51,7 @@ const App = () => {
 
   return (
     <>
-      <Tags tags={tags} setIsDeleteTag={setIsDeleteTag} setIsTagAdded={setIsTagAdded}/>
+      <Tags tags={tags} setIsDeleteTag={setIsDeleteTag} setIsTagAdded={setIsTagAdded} setPosts={setPosts}/>
       <Tooltip title='Add a new post'>
         <Fab aria-label="delete" color="secondary" onClick={handleOpenPostModal}>
           <AddIcon />
