@@ -13,7 +13,7 @@ const style = {
     p: 4,
   };
 
-const AddTagModal = ({ open, handleClose }) => {
+const AddTagModal = ({ open, handleClose, setIsTagAdded }) => {
     const [tagName, setTagName] = useState('')
 
     const handleSaveTag = async () => {
@@ -21,6 +21,7 @@ const AddTagModal = ({ open, handleClose }) => {
             const res = await tagService.addNewTag(tagName)
             if (res.status >= 200) {
                 handleClose()
+                setIsTagAdded(true)
             }
         } catch(e) {
             console.log(e)

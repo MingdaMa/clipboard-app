@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { Chip, Stack, IconButton, Tooltip } from '@mui/material';
+import { Chip, Stack, IconButton, Tooltip, Box } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import AddTagModal from './AddTagModal'
 import { tagService } from '../api/index'
 
-const Tags = ({ tags }) => { 
+const Tags = ({ tags, setIsDeleteTag, setIsTagAdded }) => { 
     const [open, setOpen] = useState(false)
 
     const handleClickOnChip = (tagId) => {
@@ -12,9 +12,11 @@ const Tags = ({ tags }) => {
     }
     
     const handleDeleteChip = async (tagId) => {
-        console.log(tagId)
         try {
             const res = await tagService.deleteTagById(tagId)
+            if (res.status >= 200) {
+                setIsDeleteTag(true)
+            }
         } catch(e) {
             console.log(e)
         }
@@ -43,9 +45,9 @@ const Tags = ({ tags }) => {
                         ></Chip>
                     })
                 }
-                <Chip key={tags.length + 1} label='No tags' variant='outlined'></Chip>
+                {/* <Chip key={tags.length + 1} label='No tags' variant='outlined'></Chip> */}
             </Stack>
-            <AddTagModal open={open} handleClose={handleClose}/>
+            <AddTagModal open={open} handleClose={handleClose} setIsTagAdded={setIsTagAdded}/>
         </>
 
     )
