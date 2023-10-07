@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Chip, Stack, IconButton, Tooltip, Box } from '@mui/material';
+import { Stack, IconButton, Tooltip, Box } from '@mui/material';
+import Chip from '@mui/material-next/Chip';
 import AddIcon from '@mui/icons-material/Add';
 import AddTagModal from './AddTagModal'
 import { tagService } from '../api/index'
@@ -30,7 +31,7 @@ const Tags = ({ tags, setIsDeleteTag, setIsTagAdded }) => {
         <>
             <Stack direction="row" spacing={1} style={{ justifyContent: 'center', alignItems: 'center' }}>
                 <Tooltip title='Add a new tag'>
-                    <IconButton aria-label="delete" onClick={handleOpen}>
+                    <IconButton aria-label="delete" color="secondary" onClick={handleOpen}>
                         <AddIcon/>
                     </IconButton>
                 </Tooltip>

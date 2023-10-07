@@ -4,7 +4,7 @@ import { tagService, postService } from './api/index'
 import Tags from './components/Tags'
 import Posts from './components/Posts'
 import AddPostModal from './components/AddPostModal'
-import { IconButton, Tooltip } from '@mui/material'
+import { IconButton, Tooltip, Fab } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add';
 
 
@@ -53,11 +53,11 @@ const App = () => {
     <>
       <Tags tags={tags} setIsDeleteTag={setIsDeleteTag} setIsTagAdded={setIsTagAdded}/>
       <Tooltip title='Add a new post'>
-        <IconButton aria-label="delete" color="secondary" onClick={handleOpenPostModal}>
+        <Fab aria-label="delete" color="secondary" onClick={handleOpenPostModal}>
           <AddIcon />
-        </IconButton>
+        </Fab>
       </Tooltip>
-        <Posts posts={posts} deletePost={deletePost}/>
+      <Posts posts={posts} tags={tags} deletePost={deletePost}/>
       <AddPostModal isAddPostModalOpen={isAddPostModalOpen} handleClosePostModal={handleClosePostModal} setIsPostAdded={setIsPostAdded}/>
     </>
   )
