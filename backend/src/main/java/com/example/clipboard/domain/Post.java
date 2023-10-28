@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -12,9 +14,9 @@ public class Post extends Model {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @Column(name = "post_id")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long postId;
+    private Long id;
 
     @Column(name = "title")
     private String title;
@@ -36,25 +38,27 @@ public class Post extends Model {
         super();
     }
 
-    public void addTag(Tag tag) {
-        this.tags.add(tag);
-        tag.getPosts().add(this);
+    public void addTags(List<Tag> tags) {
+        this.tags.addAll(tags);
+        for (Tag tag : tags) {
+            tag.getPosts().add(this);
+        }
     }
 
-    public void removeTag(Long tagId) {
-        Tag tag = this.tags.stream().filter(t -> t.getTagId() == tagId).findFirst().orElse(null);
+    public void removeTag(Long id) {
+        Tag tag = this.tags.stream().filter(t -> Objects.equals(t.getId(), id)).findFirst().orElse(null);
         if (tag != null) {
             this.tags.remove(tag);
             tag.getPosts().remove(this);
         }
     }
 
-    public Long getPostId() {
-        return postId;
+    public Long getId() {
+        return id;
     }
 
-    public void setPostId(Long postId) {
-        this.postId = postId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitle() {

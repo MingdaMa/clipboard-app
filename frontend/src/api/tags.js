@@ -21,8 +21,14 @@ const deleteTagById = async (tagId) => {
     return res
 }
 
+const getTagsByPostId = async (postId) => {
+    const res = await axiosInstance.get(`/posts/${postId}`)
+    return res
+}
+
 export default {
     addNewTag,
     getAllTags,
-    deleteTagById
+    deleteTagById,
+    getTagsByPostId
 }

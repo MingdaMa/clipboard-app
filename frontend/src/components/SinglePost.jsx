@@ -4,18 +4,23 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import { Button, CardActionArea, CardActions, IconButton, Box, Typography,Chip } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { postService } from '../api/index'
+import { postService, tagService } from '../api/index'
 import AddTagToPostModal from './AddTagToPostModal'
 
-const Post = ({ post, deletePost, tags}) => {
+const Post = ({ tags, post, deletePost}) => {
     const [isModalOpen, setIsModalOpen] = useState(false)
-    const [tag, setTag] = useState('')
+    const [tagsForPost, setTagsForPost] = useState([])
 
     const handleClose = () => setIsModalOpen(false)
 
-    const getTagForPost = () => {
-        const tagArr = tags.filter(tag => tag.posts.find(p => p.postId === post.postId))
-        setTag(tagArr[0].name)
+    const getTagForPost = async () => {
+        try {
+            const res = await tagService.getTagsByPostId(post.id)
+            console.log(res.data)
+            setTagsForPost(res.data)
+        } catch (e) {
+            console.log(e)
+        }
     }
 
     useEffect(() => {
@@ -36,7 +41,12 @@ const Post = ({ post, deletePost, tags}) => {
                     <Typography gutterBottom variant="body1" component="div">
                         {post.title}
                     </Typography>
-                    <Chip label={tag}/>
+                    {
+                        tagsForPost.length > 0 && tagsForPost.map(t => {
+                            const { id, name } = t
+                            return <Chip key={id} label={name}></Chip>
+                        })
+                    }
                 </CardContent>
                 </CardActionArea>
                 <CardActions>
@@ -51,7 +61,7 @@ const Post = ({ post, deletePost, tags}) => {
                     </IconButton>
                 </CardActions>
             </Card>
-            <AddTagToPostModal tags={tags} open={isModalOpen} handleClose={handleClose} postId={post.postId}/>
+            <AddTagToPostModal tags={tags} tagsForPost={tagsForPost} open={isModalOpen} handleClose={handleClose} postId={post.id}/>
         </>
     )
 }

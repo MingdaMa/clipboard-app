@@ -7,6 +7,7 @@ import com.example.clipboard.repository.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -34,10 +35,24 @@ public class PostService {
         postRepository.deleteById(id);
     }
 
-    public void addTag(Long tagId, Long postId) {
+    public void addTags(Long postId, Long[] tagsId) {
         Post post = postRepository.getReferenceById(postId);
-        Tag tag = tagRepository.getReferenceById(tagId);
-        post.addTag(tag);
+        List<Tag> tags = new ArrayList<>();
+        for (Long tagId : tagsId) {
+            Tag tag = tagRepository.getReferenceById(tagId);
+            tags.add(tag);
+        }
+        post.addTags(tags);
         postRepository.save(post);
+    }
+
+    public void deleteTagFromPost(Long tagId, Long postId) {
+        Post post = postRepository.getReferenceById(postId);
+        post.removeTag(tagId);
+        postRepository.save(post);
+    }
+
+    public List<Post> getPostsByTagId(Long postId) {
+        return postRepository.findPostsByTagsId(postId);
     }
 }

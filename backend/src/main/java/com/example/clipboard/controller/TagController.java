@@ -32,6 +32,12 @@ public class TagController {
         return new ResponseEntity<>(tags, HttpStatus.OK);
     }
 
+    @GetMapping("/posts/{postId}")
+    public ResponseEntity<List<Tag>> getTagsByPostId(@PathVariable Long postId) {
+        List<Tag> tagsByPostId = tagService.getTagsByPostId(postId);
+        return new ResponseEntity<>(tagsByPostId, HttpStatus.OK);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteTag(@PathVariable Long id) {
         tagService.deleteTag(id);

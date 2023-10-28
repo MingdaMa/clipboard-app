@@ -11,9 +11,9 @@ public class Tag extends Model {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @Column(name = "tag_id")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long tagId;
+    private Long id;
 
     @Column(name = "name")
     private String name;
@@ -42,12 +42,12 @@ public class Tag extends Model {
         this.name = name;
     }
 
-    public Long getTagId() {
-        return tagId;
+    public Long getId() {
+        return id;
     }
 
-    public void setTagId(Long tagId) {
-        this.tagId = tagId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {

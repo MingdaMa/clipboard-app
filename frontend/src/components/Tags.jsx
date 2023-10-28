@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Stack, IconButton, Tooltip, Box } from '@mui/material';
+import { Stack, IconButton, Tooltip } from '@mui/material';
 import Chip from '@mui/material-next/Chip';
 import AddIcon from '@mui/icons-material/Add';
 import AddTagModal from './AddTagModal'
@@ -20,7 +20,7 @@ const Tags = ({ tags, setPosts, setIsDeleteTag, setIsTagAdded }) => {
     }
 
     const filterPostsByTag = (tagId) => {
-        const filteredRes = tags.filter(tag => tag.tagId === tagId)
+        const filteredRes = tags.filter(tag => tag.id === tagId)
         setPosts(filteredRes[0].posts)
     }
 
@@ -37,17 +37,17 @@ const Tags = ({ tags, setPosts, setIsDeleteTag, setIsTagAdded }) => {
                     </IconButton>
                 </Tooltip>
                 {
-                    tags.map(tag => {
-                        const { tagId, name } = tag
+                    tags.length > 0 && tags.map(tag => {
+                        const { id, name } = tag
                         return <Chip 
-                            key={tagId} 
+                            key={id} 
                             label={name} 
-                            onClick={() => filterPostsByTag(tagId)} 
-                            onDelete={() => handleDeleteChip(tagId)}
+                            onClick={() => filterPostsByTag(id)} 
+                            onDelete={() => handleDeleteChip(id)}
                         ></Chip>
                     })
                 }
-                {/* <Chip key={tags.length + 1} label='No tags' variant='outlined'></Chip> */}
+                <Chip key={tags.length + 1} label='No tags' variant='outlined'></Chip>
             </Stack>
             <AddTagModal open={open} handleClose={handleClose} setIsTagAdded={setIsTagAdded}/>
         </>
