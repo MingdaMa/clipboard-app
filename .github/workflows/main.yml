@@ -6,18 +6,18 @@ jobs:
   deploy:
     runs-on: ubuntu-lates
     steps:
-        - name: Checkout code
-          uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-        - name: Install dependencies and build
-          run: cd frontend && npm install && npm run build && mv
+    - name: Install dependencies and build
+      run: cd frontend && npm install && npm run build && mv
 
-        - name: Deploy to Heroku
-          uses: akhileshns/heroku-deploy@v3.12.14
-          with:
-            # This will be used for authentication. You can find it in your heroku homepage account settings
-            heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          # Email that you use with heroku
-            heroku_email: ${{secrets.HEROKU_EMAIL}}
-          # The appname to use for deploying/updating
-            heroku_app_name: ${{secrets.HEROKU_APP}}
+    - name: Deploy to Heroku
+      uses: akhileshns/heroku-deploy@v3.12.14
+      with:
+        # This will be used for authentication. You can find it in your heroku homepage account settings
+        heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+      # Email that you use with heroku
+        heroku_email: ${{secrets.HEROKU_EMAIL}}
+      # The appname to use for deploying/updating
+        heroku_app_name: ${{secrets.HEROKU_APP}}
