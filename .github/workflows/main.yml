@@ -10,7 +10,7 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Install dependencies and build
-      run: cd frontend && npm install && npm run build && mv
+      run: cd frontend && npm install && npm run build && mv dist ../backend/src/main/resources/static
 
     - name: Deploy to Heroku
       uses: akhileshns/heroku-deploy@v3.12.14
