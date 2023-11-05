@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HomeController {
     @RequestMapping("/")
     public String index() {
-        return "forward:/frontend/dist/index.html";
+        return "forward:frontend/dist/index.html";
     }
 }
 
