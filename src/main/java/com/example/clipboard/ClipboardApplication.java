@@ -20,7 +20,7 @@ public class ClipboardApplication {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/**")
-						.allowedOrigins("http://localhost:5173")
+						.allowedOrigins("http://localhost:5173", "https://clipboard-app-frontend-9b2de6f32184.herokuapp.com/")
 						.allowedMethods("GET", "POST", "PUT", "DELETE");
 			}
 		};
