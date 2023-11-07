@@ -1,6 +1,8 @@
 package com.example.clipboard.domain;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -34,6 +36,11 @@ public class Tag extends Model {
     )
     private Set<Post> posts = new HashSet<Post>();
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "tag_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private User user;
+
     public Tag(){
         super();
     }
@@ -64,5 +71,13 @@ public class Tag extends Model {
 
     public void setPosts(Set<Post> projects) {
         this.posts = projects;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

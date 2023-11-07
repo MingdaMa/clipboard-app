@@ -17,24 +17,24 @@ public class TagController {
         this.tagService = tagService;
     }
 
-    @PostMapping
-    public ResponseEntity<Tag> addNewTag(@RequestBody Tag tag) {
-        Tag newTag = tagService.addNewTag(tag);
+    @PostMapping("/{userId}")
+    public ResponseEntity<Tag> addNewTag(@PathVariable Long userId, @RequestBody Tag tag) {
+        Tag newTag = tagService.addNewTag(tag, userId);
         return new ResponseEntity<>(newTag, HttpStatus.CREATED);
     }
 
-    @GetMapping
-    public ResponseEntity<List<Tag>> getAllTags() {
-        List<Tag> tags = tagService.findAllTags();
+    @GetMapping("/{userId}")
+    public ResponseEntity<List<Tag>> getAllTags(@PathVariable Long userId) {
+        List<Tag> tags = tagService.findAllTags(userId);
         if (tags.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(tags, HttpStatus.OK);
     }
 
-    @GetMapping("/posts/{postId}")
-    public ResponseEntity<List<Tag>> getTagsByPostId(@PathVariable Long postId) {
-        List<Tag> tagsByPostId = tagService.getTagsByPostId(postId);
+    @GetMapping("/posts/{postId}/{userId}")
+    public ResponseEntity<List<Tag>> getTagsByPostId(@PathVariable Long postId, @PathVariable Long userId) {
+        List<Tag> tagsByPostId = tagService.getTagsByPostId(postId, userId);
         return new ResponseEntity<>(tagsByPostId, HttpStatus.OK);
     }
 

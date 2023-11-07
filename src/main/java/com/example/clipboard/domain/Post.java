@@ -1,7 +1,9 @@
 package com.example.clipboard.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
+import javax.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.HashSet;
 import java.util.List;
@@ -33,6 +35,11 @@ public class Post extends Model {
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "posts", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JsonIgnore
     private Set<Tag> tags = new HashSet<>();
+
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "post_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private User user;
 
     public Post(){
         super();
@@ -99,5 +106,13 @@ public class Post extends Model {
 
     public void setTags(Set<Tag> tags) {
         this.tags = tags;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
